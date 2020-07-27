@@ -1,0 +1,169 @@
+﻿body {
+    padding-top: 0px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+.card-animation {
+    transition: 0.3s;
+    top: 0px;
+}
+
+    .card-animation:hover {
+        top: -5px;
+    }
+
+.uniformb {
+    height: 40px;
+    width: 80px;
+    font-size : 10px;
+}
+
+.vacantseat {
+    height: 40px;
+    width: 80px;
+    font-size: 20px;
+}
+
+.uniformbvan {
+    height: 30px;
+    width: 70px;
+    font-size: 8px;
+}
+
+.vacantseatvan {
+    height: 30px;
+    width: 70px;
+    font-size: 15px;
+}
+
+.vacantseatrich {
+    height: 35px;
+    width: 140px;
+    font-size: 15px;
+}
+
+.coupleseat {
+    height: 35px;
+    width: 140px;
+    font-size: 9px;
+}
+
+.familyseat {
+    height: 35px;
+    width: 215px;
+    font-size: 9px;
+}
+
+.richseat {
+    height: 35px;
+    width: 68px;
+    font-size: 15px;
+}
+
+.richavilable {
+    height: 35px;
+    width: 68px;
+    font-size: 9px;
+}
+
+.vacantseatrichtech {
+    height: 35px;
+    width: 340px;
+    font-size: 15px;
+}
+
+
+
+.vancouverstage {
+    height: 60px;
+    width: 560px;
+    font-size: 25px;
+}
+
+.container-non-responsive {
+    /* Margin/padding copied from Bootstrap */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    /* Set width to your desired site width */
+    width: 1170px;
+}
+
+.containerVan-non-responsive {
+    /* Margin/padding copied from Bootstrap */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    /* Set width to your desired site width */
+    width: 1700px;
+}
+
+.containerRich-non-responsive {
+    /* Margin/padding copied from Bootstrap */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    /* Set width to your desired site width */
+    width: 839px;
+}
+
+.horizontal-scroll-wrapper {
+ /*   width: 500px;*/
+    /*height: 1000px;*/
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+
+
+.row.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+    & > [class^="col-"], & > [class*=" col-"]
+
+{
+    padding-right: 0;
+    padding-left: 0;
+}
+}
+
+/*.row.no-guttersrich {
+    margin-right: 0;
+    margin-left: 0;
+    & > [class^="col-"], & > [class*="col-"]
+    {
+        padding-right: 44px;
+        padding-left: 50px;
+    }
+}*/
+
+/*table.center {
+    width: 156%;
+    margin-left: 157%;
+    margin-right: 15%;
+}*/
+

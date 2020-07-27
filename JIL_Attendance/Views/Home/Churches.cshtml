@@ -1,0 +1,179 @@
+﻿@using JIL_Attendance.Helpers
+
+
+   
+            <div class="row px-4">
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <a class="text-decoration-none"  href="~/AttendanceReservation/Vancouver/?id= + @ViewBag.Vancouver">
+                       <div class="card card-animation border-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            JIL Vancouver
+                                            @*<div class="h5 mb-0 font-weight-bold text-gray-800">@viewbag.totalservices</div>*@
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-church fa-2x text-primary"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-footer border-primary small z-1">
+                                <span class="float-left">Click Here</span>
+                                <span class="float-right">
+                                    <i class="fas fa-arrow-circle-right"></i>
+                                </span>
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <a class="text-decoration-none" href="~/AttendanceReservation/Surrey/?id= +@ViewBag.Surrey">
+                        <div class="card card-animation border-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            JIL Surrey
+                                            @*<div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TotalPrayerMeetings</div>*@
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-church fa-2x text-success"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer border-success small z-1">
+                                <span class="float-left text-success">Click Here</span>
+                                <span class="float-right">
+                                    <i class="fas fa-arrow-circle-right text-success"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <a class="text-decoration-none" href="~/AttendanceReservation/NorthVancouver/?id= +@ViewBag.NorthVancouver">
+                        <div class="card card-animation border-warning shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                            JIL North Vancouver
+                                            @*<div class="h5 mb-0 font-weight-bold text-warning">@ViewBag.TotalOfficeHours</div>*@
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-fw fa-church fa-2x text-warning"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer border-warning small z-1">
+                                <span class="float-left text-warning">Click Here</span>
+                                <span class="float-right">
+                                    <i class="fas fa-arrow-circle-right text-warning"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <a class="text-decoration-none" href="~/AttendanceReservation/Burnaby/?id= +@ViewBag.Burnaby">
+                        <div class="card card-animation border-danger shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                            JIL Burnaby-New Westminster
+                                            @*<div class="h5 mb-0 font-weight-bold text-danger">@ViewBag.TotalCorporatasting</div>*@
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-fw fa-church fa-2x text-danger"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer border-danger small z-1" href="~/ChurchSchedules/CorporateFasting/@ViewBag.Church">
+                                <span class="float-left text-danger">Click Here</span>
+                                <span class="float-right">
+                                    <i class="fas fa-arrow-circle-right text-danger"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <a class="text-decoration-none" href="~/AttendanceReservation/Richmond/?id= +@ViewBag.Richmond">
+                        <div class="card card-animation border-dark shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs text-dark font-weight-bold text-uppercase mb-1">
+                                            JIL Richmond
+                                            @*<div class="h5 mb-0 font-weight-bold text-dark">@ViewBag.TotalDawnWatch</div>*@
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-fw fa-church fa-2x text-dark"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer border-dark small z-1">
+                                <span class="float-left text-dark">Click Here</span>
+                                <span class="float-right">
+                                    <i class="fas fa-arrow-circle-right text-dark"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-xl-4 col-md-6 mb-4">
+                    <a class="text-decoration-none" href="~/AttendanceReservation/Langley/?id=+@ViewBag.Langley">
+                        <div class="card card-animation border-info shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                            Langley
+                                            @*<div class="h5 mb-0 font-weight-bold text-info">@ViewBag.TotalVisitation</div>*@
+                                        </div>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-fw fa-church fa-2x text-info"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer border-info small z-1">
+                                <span class="float-left text-info">Click Here</span>
+                                <span class="float-right">
+                                    <i class="fas fa-arrow-circle-right text-info"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+
+            </div>
+   
+    <script>
+        @*function navigate() {
+
+            //Grab your values
+            var EventID = document.getElementById('Event').value;
+            var guid = '?id=' + EventID;
+            var path = '@Url.Content("~/AttendanceReservation/Vancouver/")' + guid;
+            //Perform your navigation
+            window.location.href = path;
+            debugger
+        }*@
+
+    </script>

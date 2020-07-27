@@ -1,0 +1,48 @@
+﻿@using JIL_Attendance.Helpers
+
+    <div class="jumbotron">
+        <h1>Welcome to JIL Canada West's Online Registration</h1>
+        <p class="lead">To register to Worship and Healing Service, you need to :</p>
+        <ul class="list-unstyled">
+            <li>1. <a href="~/Account/Register" class="alert-link">Register</a> an account with us.</li>
+            <li>2. Click "Join Events" to select seats and register.</li>
+            <li>3. Accept Reopening Guidelines.</li>
+        </ul>
+        @*<p><a href="https://jilcanada.com" class="btn btn-primary btn-lg">JIL Canada Website &raquo;</a></p>*@
+    </div>
+
+<div id="partial"></div>
+
+<div class="modal fade" id="ChurchDialog" tabindex="-1" role="dialog" aria-labelledby="attendModal" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document" id="ChurchDocument">
+        
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            updatePartial();
+
+        });
+
+        function updatePartial() {
+            $.ajax({
+                url: "/Home/Churches",
+                type: "GET",
+                dataType: "html",
+                //data: {
+                //id: $("#Churches").val(),
+                //},
+                cache: false,
+                success: function (data) {
+                    $("#partial").html(data);
+                },
+                error: function (xhr, status, error) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+    </script>
+}

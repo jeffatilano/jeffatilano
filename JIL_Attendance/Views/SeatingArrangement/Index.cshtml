@@ -1,0 +1,251 @@
+﻿
+<div class="form-horizontal">
+    <div class="form-group row">
+        @Html.Label("Church", htmlAttributes: new { @class = "col-sm-1 control-label" })
+        <div class="col-sm-10 form-control-static">
+            @Html.DropDownList("Church", ViewData["Church"] as List<SelectListItem>, "Please Select Church", new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+
+<div class="form-horizontal">
+    <div class="form-group row">
+        @Html.Label("Event", htmlAttributes: new { @class = "col-sm-1 control-label" })
+        <div class="col-sm-10">
+            @Html.DropDownList("Event", new SelectList(string.Empty, "Value", "Text"), new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+
+<div class="form-group row">
+    @Html.Label("Time", htmlAttributes: new { @class = "col-sm-1 control-label", @style = "font-weight:bold" })
+    <div class="col-sm-9 form-control-static" id="Time">
+    </div>
+</div>
+
+<br />
+<div id="partial"></div>
+
+<div class="modal fade" id="AddSeat" tabindex="-1" role="dialog" aria-labelledby="attendModal" aria-hidden="true">
+    <div class="modal-dialog" role="document" id="DialogForm">
+    </div>
+</div>
+
+<div class="modal fade" id="ReserveDialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger"><i class="fas fa-exclamation"></i> Warning</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>You want to reserve this seats?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="reserve">Yes</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $("#Church").change(updateEvents);
+        $("#Event").change(updateTime);
+
+
+        function Seating() {
+            var churhID = $("#Church").val();
+            if (churhID == 1) {
+                Vancouver();
+            }
+            if (churhID == 3) {
+                NorthVan();
+            }
+            if (churhID == 4) {
+                Burnaby();
+            }
+            if (churhID == 2) {
+                Surrey();
+            }
+        }
+
+        function Vancouver()
+        {
+            $.ajax({
+                url: "/SeatingArrangement/Vancouver",
+                type: "GET",
+                dataType: "html",
+                //id: {
+                //    churchID: churhID,
+                //    eventID: $('#Event').val(),
+                //},
+                cache: false,
+                success: function (data) {
+                    $("#partial").html(data);
+
+                },
+                error: function (xhr, status, error) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+
+        function Surrey() {
+            $.ajax({
+                url: "/SeatingArrangement/Surrey",
+                type: "GET",
+                dataType: "html",
+                cache: false,
+                success: function (data) {
+                    $("#partial").html(data);
+
+                },
+                error: function (xhr, status, error) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+
+        function NorthVan() {
+            $.ajax({
+                url: "/SeatingArrangement/NorthVancouver",
+                type: "GET",
+                dataType: "html",
+                //id: {
+                //    churchID: churhID,
+                //    eventID: $('#Event').val(),
+                //},
+                cache: false,
+                success: function (data) {
+                    $("#partial").html(data);
+
+                },
+                error: function (xhr, status, error) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+
+        function Burnaby() {
+            $.ajax({
+                url: "/SeatingArrangement/Burnaby",
+                type: "GET",
+                dataType: "html",
+                cache: false,
+                success: function (data) {
+                    $("#partial").html(data);
+
+                },
+                error: function (xhr, status, error) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+        
+
+        function updateEvents() {
+            $("#Event").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetEventbySelectedChurchID")',
+                dataType: 'json',
+                data: { id: $("#Church").val() },
+                success: function (data) {
+                    $.each(data, function (i, data) {
+                        $("#Event").append('<option value="' + data.Value + '">' +
+                            data.Text + '</option>');
+                    });
+                    updateTime();
+                },
+                error: function (ex) {
+                    alert('Failed to retrive Regions:' + ex);
+                }
+            });
+
+        }
+
+        function updateTime() {
+            $("#Time").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetTimeSelectedByEvent")',
+                dataType: 'json',
+                data: { id: $("#Event").val() },
+                success: function (data) {
+                    document.getElementById('Time').innerHTML = data.thisTime;
+                    Seating();
+                },
+                //error: function (ex) {
+                //    alert('Failed to retrive Regions:' + ex);
+                //}
+            });
+
+        }
+
+
+        function CreateDialog(data) {
+            $.ajax({
+                url: '/SeatingArrangement/Create',
+                type: "GET",
+                dataType: "html",
+                data: {
+                    ChurchID: $('#Church').val(),
+                    SeatNo: $('#SeatNumEdit').val(),
+                    EventID: $('#Event').val()
+                },
+                cache: false,
+                success: function (result) {
+                    $("#DialogForm").html(result);
+                    $("#AddSeat").modal('show');
+                    $("#AskDialogEdit").modal('hide');
+                    var form = $('form')
+                        .removeData("validator") /* added by the raw jquery.validate plugin */
+                        .removeData("unobtrusiveValidation");  /* added by the jquery unobtrusive plugin*/
+                    $.validator.unobtrusive.parse(form);
+                },
+            });
+        }
+
+        function ReserveFunction() {
+            $.ajax({
+                url: '/SeatingArrangement/Reserve',
+                type: "GET",
+                dataType: "json",
+                data: {
+                    encryptchurch: $('#Church').val(),
+                    encryptseatNo: $('#SeatNumEdit').val(),
+                    encryptEvent: $('#Event').val()
+                },
+                cache: false,
+                success: function (result) {
+                    $("#AskDialogEdit").modal('hide');
+                    syncData();
+                },
+            });
+        }
+
+        function OpenFunction() {
+            $.ajax({
+                url: '/SeatingArrangement/OpenSeat',
+                type: "GET",
+                dataType: "json",
+                data: {
+                    encryptchurch: $('#Church').val(),
+                    encryptseatNo: $('#SeatNumEdit').val(),
+                    encryptEvent: $('#Event').val()
+                },
+                cache: false,
+                success: function (result) {                   
+                    Seating();
+                    $("#AskDialogEdit").modal('hide');
+                    $('.modal-backdrop').remove();
+                },
+            });
+        }
+
+    </script>
+}

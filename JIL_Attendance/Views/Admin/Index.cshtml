@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+<div class="form-horizontal">
+    <div class="form-group row">
+        @Html.Label("Church", htmlAttributes: new { @class = "col-md-2 control-label", @style = "font-weight:bold" })
+        <div class="col-md-10 form-control-static">
+            @Html.DropDownList("Church", ViewData["Church"] as List<SelectListItem>, new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+
+<a class="btn btn-success text-white" onclick="CreateDialog()"><span class="fas fa-plus" aria-hidden="true"></span> Create New</a>
+<br />
+<br />
+
+<div id="partial"></div>
+
+<div class="modal fade" id="CreateDialog" tabindex="-1" role="dialog" aria-labelledby="attendModal" aria-hidden="true">
+    <div class="modal-dialog" role="document" id="DialogForm">
+    </div>
+</div>
+
+<div class="modal fade" id="EditDialog" tabindex="-1" role="dialog" aria-labelledby="attendModal" aria-hidden="true">
+    <div class="modal-dialog" role="document" id="EditForm">
+    </div>
+</div>
+
+@section styles{
+    @Styles.Render("~/Content/bootstrap-datepicker.css")
+}
+
+@section scripts{
+    @Scripts.Render("~/Scripts/bootstrap-datepicker.js")
+    <script type="text/javascript">
+        updatePartial();
+        $("#Church").change(updatePartial);
+
+        function updatePartial() {
+            $.ajax({
+                url: "/Admin/partialIndex",
+                type: "GET",
+                dataType: "html",
+                data: {
+                    id: $("#Church").val(),
+                },
+                cache: false,
+                success: function (data) {
+                    $("#partial").html(data);
+                },
+                error: function (xhr, status, error) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+
+        function CreateDialog() {
+            $.ajax({
+                url: '/Admin/Create',
+                type: "GET",
+                data: {
+                    id: $("#Church").val()
+                },
+                dataType: "html",
+                cache: false,
+                success: function (result) {
+                    $("#DialogForm").html(result);
+                    $("#CreateDialog").modal('show');
+                    //var form = $('form')
+                    //    .removeData("validator") /* added by the raw jquery.validate plugin */
+                    //    .removeData("unobtrusiveValidation");  /* added by the jquery unobtrusive plugin*/
+                    //$.validator.unobtrusive.parse(form);
+                },
+            });
+        }
+    </script>
+}

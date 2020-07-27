@@ -1,0 +1,76 @@
+﻿
+@model IEnumerable<JIL_Attendance.Models.Admin_Event>
+@using JIL_Attendance.Helpers;
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th>Actions</th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventStart)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventEnd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>
+            @Ajax.ActionLink("Edit", "", new AjaxOptions { OnBegin = "EditDialog('" + UrlEncryptionHelper.EncryptId(item.EventID) + "')" }) |
+            @*@Html.ActionLink("Details", "Details", new { id = item.EventID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.EventID })*@
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.EventName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EventDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EventStart)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EventEnd)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+    </tr>
+        }
+
+    </table>
+</div>
+
+<script type="text/javascript">
+ function EditDialog(data) {
+        $.ajax({
+            url: "/Admin/Edit",
+            type: "GET",
+            dataType: "html",
+            data: {
+                id: data,
+              
+            },
+            cache: false,
+            success: function (data) {
+                $('#EditDialog').modal('show');
+                $('#EditForm').html(data);
+
+            },
+            error: function (xhr, status, error) {
+                alert(xhr.responseText);
+            }
+        });
+    }
+ </script>

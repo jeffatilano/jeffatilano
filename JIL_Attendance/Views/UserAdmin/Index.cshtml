@@ -1,0 +1,41 @@
+﻿@model IEnumerable<JIL_Attendance.Models.ApplicationUser>
+
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th>Action</th>
+            <th>Email</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @*@Ajax.ActionLink("Details", "", new AjaxOptions { OnBegin = "DetailsDialog('" + item.Id + "')" }) |*@
+                    @*@if (item.PasswordHash != null)
+                    {
+                        <a href="#" id="@item.Id" onclick="changeUserStatus(this)">Disable User</a>
+                    }
+                    else
+                    {
+                        <a href="#" id="@item.Id" onclick="changeUserStatus(this)">Enable User</a>
+                    }
+                    @if (item.EmailConfirmed == false)
+                    {
+                        @:| @Html.ActionLink("Resend Code", "ResendCode", new { id = item.Id })
+                    }*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

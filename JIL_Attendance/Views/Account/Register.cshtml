@@ -1,0 +1,56 @@
+﻿@model JIL_Attendance.ViewModel.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <h6 class="m-0 font-weight-bold">
+                <i class="fa fa-user-circle"></i> IMPORTANT REMINDERS
+            </h6>
+        </div>
+        <div class="card-body">
+            <ol>
+                <li>Email must be unique. You cannot use a single email address for multiple user accounts.</li>
+                <li>Password must be at least 6 characters long and must contain the following: uppercase letters (A through Z), lowercase letters (a through z), numeric characters (0-9), and non-alphanumeric characters (special characters e.g. !, $, #, %)</li>
+            </ol>
+        </div>
+    </div>
+    <hr />
+
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        <h4>Create a new account.</h4>
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group row">
+            @*@Html.Label("Username/Email", new { @class = "col-md-2 control-label" })*@
+            @Html.Label("Email", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group row">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-success" value="Register" />
+            </div>
+        </div>
+    }
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

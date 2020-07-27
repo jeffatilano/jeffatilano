@@ -1,0 +1,76 @@
+﻿
+<div class="form-horizontal">
+    <button class="btn btn-warning" id="btnCancel" onclick="cancelTicket()"><i class="fas fa-user-times"></i> Cancel my ticket</button>
+</div>
+
+
+<div class="row justify-content-center align-self-center container-non-responsive">
+    <div class="card border-primary mb-3">
+        @*<div class="card-header text-center">STAGE</div>*@
+        <div class="card-body">
+            <div class="row justify-content-center align-self-center">
+
+                <div class="form-group">
+                    <input class="form-control form-control-lg text-center" disabled="" type="text" placeholder="STAGE" id="inputLarge">
+                </div>
+            </div>
+            <div class="row">
+                <button type="button" id="Seat1" class="btn btn-outline-primary uniformb m-3" value="1">Seat 01</button>
+                <button type="button" id="Seat2" class="btn btn-outline-primary uniformb m-3" value="2">Seat 02</button>
+                <button type="button" id="Seat3" class="btn btn-outline-primary uniformb m-3" value="3">Seat 03</button>
+                <button type="button" id="Seat4" class="btn btn-outline-primary uniformb m-3" value="4">Seat 04</button>
+                <button type="button" id="Seat5" class="btn btn-outline-primary uniformb m-3" value="5">Seat 05</button>
+                <button type="button" id="Seat6" class="btn btn-outline-primary uniformb m-3" value="6">Seat 06</button>
+                <button type="button" id="Seat7" class="btn btn-outline-primary uniformb m-3" value="7">Seat 07</button>
+            </div>
+            <div class="row">
+                <button type="button" id="Seat8" class="btn btn-outline-primary uniformb m-3" value="8">Seat 08</button>
+                <button type="button" id="Seat9" class="btn btn-outline-primary uniformb m-3" value="9">Seat 09</button>
+                <button type="button" id="Seat10" class="btn btn-outline-primary uniformb m-3" value="10">Seat 10</button>
+                <button type="button" id="Seat11" class="btn btn-outline-primary uniformb m-3" value="11">Seat 11</button>
+                <button type="button" id="Seat12" class="btn btn-outline-primary uniformb m-3" value="12">Seat 12</button>
+                <button type="button" id="Seat13" class="btn btn-outline-primary uniformb m-3" value="13">Seat 13</button>
+                <button type="button" id="Seat14" class="btn btn-outline-primary uniformb m-3" value="14">Seat 14</button>
+
+            </div>
+            <div class="row">
+                <button type="button" id="Seat15" class="btn btn-outline-primary uniformb m-3" value="15">Seat 15</button>
+                <button type="button" id="Seat16" class="btn btn-outline-primary uniformb m-3" value="16">Seat 16</button>
+                <button type="button" id="Seat17" class="btn btn-outline-primary uniformb m-3" value="17">Seat 17</button>
+                <button type="button" id="Seat18" class="btn btn-outline-primary uniformb m-3" value="18">Seat 18</button>
+                <button type="button" id="Seat19" class="btn btn-outline-primary uniformb m-3" value="19">Seat 19</button>
+                <button type="button" id="Seat20" class="btn btn-outline-primary uniformb m-3" value="20">Seat 20</button>
+                <button type="button" id="Seat21" class="btn btn-outline-primary uniformb m-3" value="21">Seat 21</button>
+
+            </div>
+            <div class="row">
+                <button type="button" id="Seat22" class="btn btn-outline-primary uniformb m-3" value="22">Seat 22</button>
+                <button type="button" id="Seat23" class="btn btn-outline-primary uniformb m-3" value="23">Seat 23</button>
+                <button type="button" id="Seat24" class="btn btn-outline-primary uniformb m-3" value="24">Seat 24</button>
+                <button type="button" id="Seat25" class="btn btn-outline-primary uniformb m-3" value="25">Seat 25</button>
+                <button type="button" id="Seat26" class="btn btn-outline-primary uniformb m-3" value="26">Seat 26</button>
+                <button type="button" id="Seat27" class="btn btn-outline-primary uniformb m-3" value="27">Seat 27</button>
+                <button type="button" id="Seat28" class="btn btn-outline-primary uniformb m-3" value="28">Seat 28</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    syncData();
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+
+    $('[type="button"]').click(function () {
+        var data = $(this).attr("value");
+        CreateDialog(data);
+    });
+
+
+    //$("#button").click(function (e) {
+    //    e.preventDefault();
+    //    DialogFunction();
+    //});
+
+</script>

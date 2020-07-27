@@ -1,0 +1,26 @@
+﻿@model IEnumerable<JIL_Attendance.Models.Attend_FamilyMember>
+
+@using JIL_Attendance.Helpers;
+
+  
+        <table>
+            <tr>
+                @*<th>@Html.DisplayName("Action")</th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.FMember)
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @*<td>
+                        @Ajax.ActionLink("Delete", "DeleteSpecialSkills", "HR", new { id = UrlEncryptionHelper.EncryptId(item.RecordID) }, new AjaxOptions { UpdateTargetId = "skillsTable" })
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FMember)
+                    </td>
+                </tr>
+            }
+
+        </table>

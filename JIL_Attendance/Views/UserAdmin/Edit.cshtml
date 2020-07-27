@@ -1,0 +1,53 @@
+﻿
+@model JIL_Attendance.ViewModel.EditUserViewModel
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>User</h4>
+    <hr />
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.Id)
+    <div class="form-group row">
+        @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
+    </div>
+    <div class="form-horizontal">
+        <div class="form-group row">
+            @Html.Label("Church", htmlAttributes: new { @class = "col-md-2 control-label", @style = "font-weight:bold" })
+            <div class="col-md-10 form-control-static">
+                @Html.DropDownList("Church", ViewData["Church"] as List<SelectListItem>, "Please Select Church", new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+        @Html.Label("Roles", new { @class = "control-label col-md-2" })
+        <div class=" col-md-10">
+            @foreach (var item in Model.RolesList)
+            {
+                <div class="checkbox">
+                    <label><input type="checkbox" name="SelectedRole" checked="@item.Selected" value="@item.Value" />@item.Value</label>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-success" />
+            @Html.ActionLink("Cancel", "Index", null, new { @class = "btn btn-danger", @role = "button" })
+        </div>
+    </div>
+</div>
+}
+
+

@@ -1,0 +1,77 @@
+﻿@model IEnumerable<JIL_Attendance.Models.cmms_PersonalData>
+
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th>Actions</th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.UnifiedID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MiddleName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompleteAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Birthday)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CivilStatus)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.PISRecordID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.PISRecordID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.PISRecordID })
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.UnifiedID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UnifiedID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MiddleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CompleteAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Birthday)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Gender)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CivilStatus)
+        </td>
+    </tr>
+        }
+
+    </table>
+</div>

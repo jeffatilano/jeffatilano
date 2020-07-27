@@ -1,0 +1,390 @@
+﻿
+@model JIL_Attendance.ViewModel.EventDetailsViewModel
+@using JIL_Attendance.Helpers;
+
+@Html.Hidden("Churches", (string)ViewBag.churchid)
+
+<h3 JIL Richmond></h3>
+
+<div class="form-horizontal">
+    <div class="form-group row">
+        @Html.Label("Event", htmlAttributes: new { @class = "col-sm-1 control-label", @style = "font-weight:bold" })
+        <div class="col-sm-10 form-control-static">
+            @Html.DropDownList("Event", ViewData["Event"] as List<SelectListItem>, "Please Select Event", new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+
+<div class="form-group row">
+    @Html.Label("Time/Date", htmlAttributes: new { @class = "col-sm-1 control-label", @style = "font-weight:bold" })
+    <div class="col-sm-9 form-control-static" id="Time">
+    </div>
+</div>
+
+<div id="partial" class="horizontal-scroll-wrapper"></div>
+
+<div class="modal fade" id="AddSeat" tabindex="-1" role="dialog" aria-labelledby="attendModal" aria-hidden="true">
+    <div class="modal-dialog" role="document" id="DialogForm">
+    </div>
+</div>
+
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="guidelinesModal">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="px-4 mt-4">
+                <h4 class="text-center">JESUS IS LORD CHURCH CANADA WEST</h4>
+                <p class="lead text-center">REOPENING GUIDELINES as of July 6, 2020</p>
+                <br />
+                <div class="alert alert-danger" id="notifyAlert">
+                    <i class="fas fa-exclamation"></i> Please check five (5) statements to register seats. Thank you!
+                </div>
+                <p class="lead b-2">THE WORSHIP AND HEALING SERVICE AND NIGHT OF PRAYER</p>
+                <div>
+                    <p>✦ Pre-registration of attendees for the WHS and NOP at the church is required. Please contact your local church.</p>
+                </div>
+                <div class="m-3">
+                    <p>➢ Vulnerable people such as seniors etc. are discouraged to attend in person.</p>
+                    <p>➢ By registering attend the WHS and/or NOP, you are declaring the following five (5) statements.</p>
+                </div>
+                <div class="custom-control custom-checkbox m-3">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                    <label class="custom-control-label" for="customCheck1">I hereby declare that I or anyone in my household is not or has not been infected with the COVID-19 virus and also has not been in contact with anyone who tested positive for COVID-19 in the last 14 days.</label>
+                </div>
+                <div class="custom-control custom-checkbox m-3">
+                    <input type="checkbox" class="custom-control-input" id="customCheck2" />
+                    <label class="custom-control-label" for="customCheck2">I hereby declare that I or anyone in my household has not experienced any cold or flu-like symptoms in the last 14days (fever, cough, shortness of breath, runny nose or sore throat).</label>
+                </div>
+                <div class="custom-control custom-checkbox m-3">
+                    <input type="checkbox" class="custom-control-input" id="customCheck3">
+                    <label class="custom-control-label" for="customCheck3">If I or anyone in my household experience any cold or flu-like symptoms after submitting this declaration, I will then not visit the JIL Church owned/leased/rented facilities for a minimum period of 14 days after the cold or flu-like symptoms have completely gone away. This remains in effect during the entire COVID-19 pandemic unless communicated otherwise.</label>
+                </div>
+                <div class="custom-control custom-checkbox m-3">
+                    <input type="checkbox" class="custom-control-input" id="customCheck4">
+                    <label class="custom-control-label" for="customCheck4">I hereby declare that I or any member of my household have not travelled to or had a lay-over in any country outside the Candan in the past 14 days. If I or anyone in my household travel to any country outside Canada after submitting this declaration, I will then not visit the JIL Church owned/leased/rented facilities for a minimum period of 14 days after the date of return to Canada.</label>
+                </div>
+                <div class="custom-control custom-checkbox m-3">
+                    <input type="checkbox" class="custom-control-input" id="customCheck5">
+                    <label class="custom-control-label" for="customCheck5">I hereby release Jesus Is Lord Church Canada West, its Directors, Officers and Staff from any and all claims that I have or may have in the future for any loss or damage the I may suffer due to contracting COVID-19, including sickness or death, as a result of attending or using the JIL Church owned/leased/rented facilities.</label>
+                </div>
+                @*<div class="custom-control custom-checkbox m-3">
+                        <input type="checkbox" class="custom-control-input" id="customCheck6">
+                        <label class="custom-control-label" for="customCheck6" onclick="autoCheck()">I understand all.</label>
+                    </div>*@
+                <div class="modal-footer">
+                    <button id="GuidelinesButton" type="button" class="btn btn-success">I Accept</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ExceedDialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger"><i class="fas fa-exclamation"></i> Warning</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>You have already exceeded your ticket, there's only one ticket for church event. Thank you!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script type="text/javascript">
+        //Seating();
+
+        $("#Event").change(updateTime);
+        $("#guidelinesModal").modal('show');
+        $(".alert").hide();
+
+        $('#GuidelinesButton').click(function () {
+            if (document.getElementById('customCheck5').checked && document.getElementById('customCheck4').checked && document.getElementById('customCheck3').checked && document.getElementById('customCheck2').checked && document.getElementById('customCheck1').checked) {
+                $("#guidelinesModal").modal('hide');
+            }
+            else {
+                $(".alert").show()
+            }
+        });
+
+          function updateTime() {
+             $("#Time").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetTimeSelectedByEvent")',
+                dataType: 'json',
+                data: { id: $("#Event").val() },
+                success: function (data) {
+                    document.getElementById('Time').innerHTML = data.thisTime;
+                    Seating();
+                },
+                //error: function (ex) {
+                //    alert('Failed to retrive Regions:' + ex);
+                //}
+            });
+
+        }
+
+        function autoCheck() {
+            $('#customCheck5').prop("checked", true);
+            $('#customCheck4').prop("checked", true);
+            $('#customCheck3').prop("checked", true);
+            $('#customCheck2').prop("checked", true);
+            $('#customCheck1').prop("checked", true);
+        }
+
+        function Seating() {
+            var Event = $("#Event").val();
+            if (Event != "") {
+                $.ajax({
+                    url: "/AttendanceReservation/PartialRichmond",
+                    type: "GET",
+                    dataType: "html",
+                    cache: false,
+                    success: function (data) {
+                        $("#partial").show();
+                        $("#partial").html(data);
+                    },
+                    error: function (xhr, status, error) {
+                        alert(xhr.responseText);
+                    }
+                });
+            }
+            else { $("#partial").hide(); }
+        }
+
+                function CreateDialog(data) {
+                    $.ajax({
+                        url: '/AttendanceReservation/Create',
+                        type: "GET",
+                        dataType: "html",
+                        data: {
+                            ChurchID: $('#Churches').val(),
+                            SeatNo: data,
+                            EventID: $('#Event').val()
+                        },
+                        cache: false,
+                        success: function (result) {
+                            $("#DialogForm").html(result);
+                            $("#AddSeat").modal('show');
+                            //var form = $('form')
+                            //    .removeData("validator") /* added by the raw jquery.validate plugin */
+                            //    .removeData("unobtrusiveValidation");  /* added by the jquery unobtrusive plugin*/
+                            //$.validator.unobtrusive.parse(form);
+                        },
+                    });
+                }
+
+                function syncData() {
+                    $.ajax({
+                        url: "/AttendanceReservation/getData",
+                        type: "GET",
+                        dataType: "json",
+                        data: {
+                            ChurchID: $('#Churches').val(),
+                            EventID: $('#Event').val()
+                        },
+                        cache: false,
+                        success: function (data) {
+                            for (var i = 0; i < data.List.length; i++) {
+                                //gdpData.push(data.List[i].CountryCode +": "+  data.List[i].ChurchCount);
+                                if (data.List[i].SeatNo == 1) {
+                                    document.getElementById("Seat1").disabled = true;
+                                    document.getElementById("Seat1").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 2) {
+                                    document.getElementById("Seat2").disabled = true;
+                                    document.getElementById("Seat2").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 3) {
+                                    document.getElementById("Seat3").disabled = true;
+                                    document.getElementById("Seat3").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 4) {
+                                    document.getElementById("Seat4").disabled = true;
+                                    document.getElementById("Seat4").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 5) {
+                                    document.getElementById("Seat5").disabled = true;
+                                    document.getElementById("Seat5").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 6) {
+                                    document.getElementById("Seat6").disabled = true;
+                                    document.getElementById("Seat6").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 7) {
+                                    document.getElementById("Seat7").disabled = true;
+                                    document.getElementById("Seat7").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 8) {
+                                    document.getElementById("Seat8").disabled = true;
+                                    document.getElementById("Seat8").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 9) {
+                                    document.getElementById("Seat9").disabled = true;
+                                    document.getElementById("Seat9").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 10) {
+                                    document.getElementById("Seat10").disabled = true;
+                                    document.getElementById("Seat10").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 11) {
+                                    document.getElementById("Seat11").disabled = true;
+                                    document.getElementById("Seat11").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 12) {
+                                    document.getElementById("Seat12").disabled = true;
+                                    document.getElementById("Seat12").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 13) {
+                                    document.getElementById("Seat13").disabled = true;
+                                    document.getElementById("Seat13").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 14) {
+                                    document.getElementById("Seat14").disabled = true;
+                                    document.getElementById("Seat14").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 15) {
+                                    document.getElementById("Seat15").disabled = true;
+                                    document.getElementById("Seat15").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 16) {
+                                    document.getElementById("Seat16").disabled = true;
+                                    document.getElementById("Seat16").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 17) {
+                                    document.getElementById("Seat17").disabled = true;
+                                    document.getElementById("Seat17").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 18) {
+                                    document.getElementById("Seat18").disabled = true;
+                                    document.getElementById("Seat18").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 19) {
+                                    document.getElementById("Seat19").disabled = true;
+                                    document.getElementById("Seat19").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 20) {
+                                    document.getElementById("Seat20").disabled = true;
+                                    document.getElementById("Seat20").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 21) {
+                                    document.getElementById("Seat21").disabled = true;
+                                    document.getElementById("Seat21").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 22) {
+                                    document.getElementById("Seat22").disabled = true;
+                                    document.getElementById("Seat22").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 23) {
+                                    document.getElementById("Seat23").disabled = true;
+                                    document.getElementById("Seat23").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 24) {
+                                    document.getElementById("Seat24").disabled = true;
+                                    document.getElementById("Seat24").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 25) {
+                                    document.getElementById("Seat25").disabled = true;
+                                    document.getElementById("Seat25").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 26) {
+                                    document.getElementById("Seat26").disabled = true;
+                                    document.getElementById("Seat26").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 27) {
+                                    document.getElementById("Seat27").disabled = true;
+                                    document.getElementById("Seat27").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 28) {
+                                    document.getElementById("Seat28").disabled = true;
+                                    document.getElementById("Seat28").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 29) {
+                                    document.getElementById("Seat29").disabled = true;
+                                    document.getElementById("Seat29").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 30) {
+                                    document.getElementById("Seat30").disabled = true;
+                                    document.getElementById("Seat30").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 31) {
+                                    document.getElementById("Seat31").disabled = true;
+                                    document.getElementById("Seat31").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 32) {
+                                    document.getElementById("Seat32").disabled = true;
+                                    document.getElementById("Seat32").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 33) {
+                                    document.getElementById("Seat33").disabled = true;
+                                    document.getElementById("Seat33").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 34) {
+                                    document.getElementById("Seat34").disabled = true;
+                                    document.getElementById("Seat34").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 35) {
+                                    document.getElementById("Seat35").disabled = true;
+                                    document.getElementById("Seat35").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 36) {
+                                    document.getElementById("Seat36").disabled = true;
+                                    document.getElementById("Seat36").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 37) {
+                                    document.getElementById("Seat37").disabled = true;
+                                    document.getElementById("Seat37").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 38) {
+                                    document.getElementById("Seat38").disabled = true;
+                                    document.getElementById("Seat38").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 39) {
+                                    document.getElementById("Seat39").disabled = true;
+                                    document.getElementById("Seat39").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 40) {
+                                    document.getElementById("Seat40").disabled = true;
+                                    document.getElementById("Seat40").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 41) {
+                                    document.getElementById("Seat41").disabled = true;
+                                    document.getElementById("Seat41").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 42) {
+                                    document.getElementById("Seat42").disabled = true;
+                                    document.getElementById("Seat42").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 43) {
+                                    document.getElementById("Seat43").disabled = true;
+                                    document.getElementById("Seat43").innerHTML = data.List[i].Fullname;
+                                }
+                                if (data.List[i].SeatNo == 44) {
+                                    document.getElementById("Seat44").disabled = true;
+                                    document.getElementById("Seat44").innerHTML = data.List[i].Fullname;
+                                }
+
+                            }
+
+                        },
+                        error: function (xhr, status, error) {
+                            alert(xhr.responseText);
+                        }
+                    });
+                }
+    </script>
+}
+
+
+
+

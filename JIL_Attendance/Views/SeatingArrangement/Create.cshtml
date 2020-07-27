@@ -1,0 +1,84 @@
+﻿
+@model JIL_Attendance.Models.SeatReservations
+
+@using (Ajax.BeginForm("Create", "SeatingArrangement", null, new AjaxOptions() { OnSuccess = "getresult" }, null))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("encryptchurch", ViewData["ChurchIDEncrypt"])
+    @Html.Hidden("encryptseatNo", ViewData["SeatEncrypt"])
+    @Html.Hidden("encryptEvent", ViewData["EventEncrypt"])
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Reservations</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+            <div class="form-horizontal">
+                <div class="form-group">
+
+                    <div class="form-group row">
+                        @Html.Label("Fullname", htmlAttributes: new { @class = "col-md-3 control-label", @style = "font-weight:bold" })
+                        <div class="col-md-9 form-control-static">
+                            @Html.EditorFor(model => model.Fullname, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Fullname, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        @Html.Label("Network", htmlAttributes: new { @class = "col-md-3 control-label", @style = "font-weight:bold" })
+                        <div class="col-md-9 form-control-static">
+                            @Html.EditorFor(model => model.Network, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Network, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <input type="submit" value="Save" class="btn btn-success" />
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+}
+
+
+<script type="text/javascript">
+    function getresult(data) {
+        if (data.Save) {
+            $("#AddSeat").modal('hide');
+            syncData();
+            var notification = {
+                type: "success",
+                title: "Successfully",
+                message: "Saved",
+                icon: 'fas fa-check'
+            };
+            showNotification(notification);
+        }
+        if (data.AlreadyExists) {
+            var notification = {
+                type: "danger",
+                title: "Warning!",
+                message: "Name already exist",
+                icon: 'fas fa-exclamation'
+            };
+            showNotification(notification);
+        }
+        if (data.EditSuccess) {
+            $("#AddSeat").modal('hide');
+            syncData();
+            var notification = {
+                type: "success",
+                title: "Successfully",
+                message: "Edit",
+                icon: 'fas fa-check'
+            };
+            showNotification(notification);
+        }
+    }
+
+</script>

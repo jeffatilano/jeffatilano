@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<a class="btn btn-success text-white" onclick="CreateDialog()"><span class="fas fa-plus" aria-hidden="true"></span> Create New</a>
+
+
+<div id="partial"></div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            updatePartial();
+
+            function updatePartial() {
+                //var id = $("#Country").val();
+                var path = '@Url.Content("~/Attendance/partialIndex/")';
+                $("#partial").load(path);
+            }
+        });
+    </script>
+    }

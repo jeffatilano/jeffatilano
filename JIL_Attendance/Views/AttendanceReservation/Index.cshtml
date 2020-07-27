@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<div class="form-group">
+    @Html.Label("Church", htmlAttributes: new { @class = "col-md-3 control-label", @style = "font-weight:bold" })
+    <div class="col-md-9 form-control-static">
+        @Html.DropDownList("Statusresult", ViewData["Status"] as List<SelectListItem>, "Please Select Church", new { @class = "form-control" })
+    </div>
+</div>
+
+<a class="btn btn-success text-white" onclick="CreateDialog()"><span class="fas fa-plus" aria-hidden="true"></span> Create New</a>
+<br />
+<br />
+
+<div id="partial"></div>
+
+<div class="modal fade" id="CreateDialog" tabindex="-1" role="dialog" aria-labelledby="attendModal" aria-hidden="true">
+    <div class="modal-dialog" role="document" id="DialogForm">
+    </div>
+</div>
+
+
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryui")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Seating();
+           
+            @*function updatePartial() {
+                //var id = $("#Country").val();
+                var path = '@Url.Content("~/AttendanceReservation/partialIndex/")';
+                $("#partial").load(path);
+            }*@
+
+
+         function Seating() {
+                //var id = $("#Country").val();
+                var path = '@Url.Content("~/AttendanceReservation/SeatingArrangement/")';
+                $("#partial").load(path);
+            }
+
+        });
+
+        function CreateDialog() {
+            $.ajax({
+                url: '/AttendanceReservation/Create',
+                type: "GET",
+                dataType: "html",
+                cache: false,
+                success: function (result) {
+                    $("#DialogForm").html(result);
+                    $("#CreateDialog").modal('show');
+                    //var form = $('form')
+                    //    .removeData("validator") /* added by the raw jquery.validate plugin */
+                    //    .removeData("unobtrusiveValidation");  /* added by the jquery unobtrusive plugin*/
+                    //$.validator.unobtrusive.parse(form);
+                },
+            });
+        }
+    </script>
+}
+

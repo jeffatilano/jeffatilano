@@ -1,0 +1,103 @@
+﻿@model JIL_Attendance.Models.Admin_Event
+
+@using (Ajax.BeginForm("Edit", "Admin", null, new AjaxOptions() { OnSuccess = "getresult" }, null))
+{
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+            @Html.HiddenFor(model => model.ChurchID)
+            @Html.HiddenFor(model => model.EventID)
+            <div class="form-group row">
+                @Html.LabelFor(model => model.EventName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EventName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EventName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.EventDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EventDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EventDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.EventStart, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EventStart, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EventStart, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(model => model.EventEnd, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EventEnd, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EventEnd, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*<div class="form-group row">
+                @Html.LabelFor(model => model.ChurchID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ChurchID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ChurchID, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+            <div class="form-group row">
+                @Html.Label("Status", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-8">
+                    <div class="custom-control custom-radio custom-control-inline">
+                        @Html.RadioButtonFor(model => model.Status, "Open", new { @class = "custom-control-input", @id = "Open" })
+                        <label class="custom-control-label" for="Open">Open</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        @Html.RadioButtonFor(model => model.Status, "Close", new { @class = "custom-control-input", @id = "Close" })
+                        <label class="custom-control-label" for="Close">Close</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="modal-footer">
+                <input type="submit" value="Save" class="btn btn-success" />
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+       
+    </div>
+}
+
+<script type="text/javascript">
+    function getresult(data) {
+        if (data.save) {
+            $("#EditDialog").modal('hide');
+            updatePartial();
+            var notification = {
+                type: "success",
+                title: "Successfully",
+                message: "Saved",
+                icon: 'fas fa-check'
+            };
+            showNotification(notification);
+        }
+        //if (data.AlreadyExists) {
+        //    var notification = {
+        //        type: "danger",
+        //        title: "Warning!",
+        //        message: "Name already exist",
+        //        icon: 'fas fa-exclamation'
+        //    };
+        //    showNotification(notification);
+        //}
+        //if (data.Exceedreserved) {
+        //    $("#AddSeat").modal('hide');
+        //    $('#ExceedDialog').modal('show');
+        //}
+    }
+ </script>

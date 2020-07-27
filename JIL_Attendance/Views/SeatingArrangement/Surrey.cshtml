@@ -1,0 +1,310 @@
+﻿<div id="partial" class="horizontal-scroll-wrapper">
+    <div class="row justify-content-center align-self-center container-non-responsive">
+        <div class="card border-primary mb-3">
+            @*<div class="card-header text-center">STAGE</div>*@
+            <div class="card-body">
+                <div class="row justify-content-center align-self-center">
+
+                    <div class="form-group">
+                        <input class="form-control form-control-lg text-center" disabled="" type="text" placeholder="STAGE" id="inputLarge">
+                    </div>
+                </div>
+                <div class="row">
+                    <button type="button" id="Seat1" class="btn btn-outline-primary uniformb m-3" value="1">Seat 01</button>
+                    <button type="button" id="Seat2" class="btn btn-outline-primary uniformb m-3" value="2">Seat 02</button>
+                    <button type="button" id="Seat3" class="btn btn-outline-primary uniformb m-3" value="3">Seat 03</button>
+                    <button type="button" id="Seat4" class="btn btn-outline-primary uniformb m-3" value="4">Seat 04</button>
+                </div>
+                <div class="row">
+                    <button type="button" id="Seat5" class="btn btn-outline-primary uniformb m-3" value="5">Seat 05</button>
+                    <button type="button" id="Seat6" class="btn btn-outline-primary uniformb m-3" value="6">Seat 06</button>
+                    <button type="button" id="Seat7" class="btn btn-outline-primary uniformb m-3" value="7">Seat 07</button>
+                    <button type="button" id="Seat8" class="btn btn-outline-primary uniformb m-3" value="8">Seat 08</button>
+                </div>
+                <div class="row">
+                    <button type="button" id="Seat9" class="btn btn-outline-primary uniformb m-3" value="9">Seat 09</button>
+                    <button type="button" id="Seat10" class="btn btn-outline-primary uniformb m-3" value="10">Seat 10</button>
+                    <button type="button" id="Seat11" class="btn btn-outline-primary uniformb m-3" value="11">Seat 11</button>
+                    <button type="button" id="Seat12" class="btn btn-outline-primary uniformb m-3" value="12">Seat 12</button>
+                </div>
+                <div class="row float-right">
+                    <button type="button" id="Seat13" class="btn btn-outline-primary uniformb m-3" value="13">Seat 13</button>
+                    <button type="button" id="Seat14" class="btn btn-outline-primary uniformb m-3" value="14">Seat 14</button>
+                    @*<button type="button" id="Seat15" class="btn btn-outline-primary uniformb m-3" value="15">Seat 15</button>
+                        <button type="button" id="Seat16" class="btn btn-outline-primary uniformb m-3" value="16">Seat 16</button>*@
+                </div>
+
+                <div class="form-group">
+                    <input class="form-control form-control text-center" disabled="" type="text" placeholder="TECH BOOTH">
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="AddFam">
+    <div class="modal-dialog" role="document" id="FamForm">
+    </div>
+</div>
+
+<div class="modal fade" data-backdrop="static" data-keyboard="false" id="FamMembers">
+    <div class="modal-dialog" role="document" id="FamMembersForm">
+    </div>
+</div>
+
+@*<div class="modal fade" id="AskDialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @Html.Hidden("SeatNumber")
+                <div class="form-group row">
+                    @Html.Label("Attending with family members?", htmlAttributes: new { @class = "col-md-9 control-label", @style = "font-weight:bold" })
+                    <div class="col-md-3 form-control-static">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="CreateDialog()" id="nobtn">No</button>
+                <button type="button" class="btn btn-success" onclick="FamDialog()" id="yesbtn">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>*@
+
+<div class="modal fade" id="AskDialogEdit">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    @Html.Label("Name:", htmlAttributes: new { @class = "col-sm-2 control-label", @style = "font-weight:bold" })
+                    <div class="col-sm-9 form-control-static" id="Fname">
+                    </div>
+                </div>
+                @Html.Label("Family Members", htmlAttributes: new { @class = "col-sm-4 control-label", @style = "font-weight:bold" })
+                <div class="col-sm-9 form-control-static" id="name"><ul></ul></div>
+                @Html.Hidden("SeatNumEdit")
+                <div class="form-group row justify-content-center">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" onclick="OpenFunction()" id="openBtn">Open</button>
+                <button type="button" class="btn btn-primary" onclick="ReserveFunction()" id="nobtn">Reserved</button>
+                <button type="button" class="btn btn-success" onclick="EditFunction()" id="yesbtn">Edit</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    syncData();
+  
+    $('[type="button"]').click(function () {
+        var data = $(this).attr("value");
+        AskDialogEdit(data);
+        document.getElementById("name").innerHTML = "";
+        document.getElementById("Fname").innerHTML = "";
+    });
+
+    function AskDialog(data) {
+        document.getElementById("SeatNumEdit").value = data;
+        $("#AskDialog").modal('show');
+    }
+
+    function AskDialogEdit(data) {
+        $.ajax({
+            url: "/SeatingArrangement/Edit",
+            type: "GET",
+            dataType: "json",
+            data: {
+                ChurchID: $('#Church').val(),
+                EventID: $('#Event').val(),
+                SeatNo: data,
+            },
+            cache: false,
+            success: function (data) {
+                $("#AskDialogEdit").modal('show');
+                document.getElementById("SeatNumEdit").value = data.seatNo;
+                if (data.withFam) { 
+                    document.getElementById("Fname").innerHTML = data.Name;
+                    for (var i = 0; i < data.List.length; i++) {
+                        nameList = "<li>" + data.List[i].Fullname + "</li>";
+                        document.getElementById("name").innerHTML += nameList;
+                    }
+                }
+                if (data.NameOnly)
+                {
+                    document.getElementById("Fname").innerHTML = data.Name;
+                    document.getElementById("name").innerHTML = "N/A";
+                }
+                if (data.noData)
+                {
+                    document.getElementById("Fname").innerHTML = "N/A";
+                    document.getElementById("name").innerHTML = "N/A";
+                }
+            },
+        });
+
+    }
+
+    function EditFunction()
+    {
+        var data = $('#SeatNumber').val();
+        FamDialog(data);
+    }
+
+    function AskDialog(data) {
+        document.getElementById("SeatNumber").value = data;
+        $("#AskDialog").modal('show');
+        $("#AskDialogEdit").modal('hide');
+    }
+
+    function FamDialogEdit() {
+        $("#AskDialog").modal('hide');
+        $.ajax({
+            url: '/SeatingArrangement/FamCreate',
+            type: "GET",
+            dataType: "html",
+            data: {
+                ChurchID: $('#Churches').val(),
+                SeatNo: $('#SeatNumber').val(),
+                EventID: $('#EventID').val(),
+
+            },
+            cache: false,
+            success: function (result) {
+                $("#FamForm").html(result);
+                $("#AddFam").modal('show');
+                //var form = $('form')
+                //    .removeData("validator") /* added by the raw jquery.validate plugin */
+                //    .removeData("unobtrusiveValidation");  /* added by the jquery unobtrusive plugin*/
+                //$.validator.unobtrusive.parse(form);
+            },
+        });
+    }
+
+    function FamDialog(data) {
+        $("#AskDialogEdit").modal('hide');
+        $.ajax({
+            url: '/SeatingArrangement/FamCreate',
+            type: "GET",
+            dataType: "html",
+            data: {
+                ChurchID: $('#Church').val(),
+                SeatNo: $('#SeatNumEdit').val(),
+                EventID: $('#Event').val(),
+
+            },
+            cache: false,
+            success: function (result) {
+                $("#FamForm").html(result);
+                $("#AddFam").modal('show');
+                //var form = $('form')
+                //    .removeData("validator") /* added by the raw jquery.validate plugin */
+                //    .removeData("unobtrusiveValidation");  /* added by the jquery unobtrusive plugin*/
+                //$.validator.unobtrusive.parse(form);
+            },
+        });
+    }
+
+    function syncData() {
+        document.getElementsByClassName('btn').innerHTML = "";
+        $.ajax({
+            url: "/SeatingArrangement/getData",
+            type: "GET",
+            dataType: "json",
+            data: {
+                ChurchID: $('#Church').val(),
+                EventID: $('#Event').val()
+            },
+            cache: false,
+            success: function (data) {
+         
+                for (var i = 0; i < data.List.length; i++) {
+                    //gdpData.push(data.List[i].CountryCode +": "+  data.List[i].ChurchCount);
+                    if (data.List[i].SeatNo == 1) {                      
+                        document.getElementById("Seat1").innerHTML = data.List[i].Fullname;
+                    }
+                    if (data.List[i].SeatNo == 2) {                   
+                        document.getElementById("Seat2").innerHTML = data.List[i].Fullname;
+                    }
+                    if (data.List[i].SeatNo == 3) {
+               
+                        document.getElementById("Seat3").innerHTML = data.List[i].Fullname;
+                    }
+                    if (data.List[i].SeatNo == 4) {
+                      
+                        document.getElementById("Seat4").innerHTML = data.List[i].Fullname;
+                    }
+                    if (data.List[i].SeatNo == 5) {
+                 
+                        document.getElementById("Seat5").innerHTML = data.List[i].Fullname;
+                    }
+                    if (data.List[i].SeatNo == 6) {
+                    
+                        document.getElementById("Seat6").innerHTML = data.List[i].Fullname;
+                    }
+                    if (data.List[i].SeatNo == 7) {
+                     
+                        document.getElementById("Seat7").innerHTML = data.List[i].Fullname;
+                    }
+                    if (data.List[i].SeatNo == 8) {
+                  
+                        document.getElementById("Seat8").innerHTML = data.List[i].Fullname;
+                    }
+                    if (data.List[i].SeatNo == 9) {
+                
+                        document.getElementById("Seat9").innerHTML = data.List[i].Fullname;
+                    }
+                    if (data.List[i].SeatNo == 10) {
+                    
+                        document.getElementById("Seat10").innerHTML = data.List[i].Fullname;
+                    }
+                    if (data.List[i].SeatNo == 11) {
+                   
+                        document.getElementById("Seat11").innerHTML = data.List[i].Fullname;
+                    }
+                    if (data.List[i].SeatNo == 12) {
+                     
+                        document.getElementById("Seat12").innerHTML = data.List[i].Fullname;
+                    }
+                    if (data.List[i].SeatNo == 13) {
+              
+                        document.getElementById("Seat13").innerHTML = data.List[i].Fullname;
+                    }
+                    if (data.List[i].SeatNo == 14) {
+          
+                        document.getElementById("Seat14").innerHTML = data.List[i].Fullname;
+                    }
+                    //if (data.List[i].SeatNo == 15) {
+                    //    document.getElementById("Seat15").disabled = true;
+                    //    document.getElementById("Seat15").innerHTML = data.List[i].Fullname;
+                    //}
+                    //if (data.List[i].SeatNo == 16) {
+                    //    document.getElementById("Seat16").disabled = true;
+                    //    document.getElementById("Seat16").innerHTML = data.List[i].Fullname;
+                    //}
+
+                }
+
+            },
+            error: function (xhr, status, error) {
+                alert(xhr.responseText);
+            }
+        });
+    }
+</script>
